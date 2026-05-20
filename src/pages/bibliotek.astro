@@ -1,0 +1,93 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+// Documents hosted on tjornarpshistoria.se (owned by Tjörnarps Sockengille).
+// We link out to the source rather than re-hosting the files.
+const docs = [
+  {
+    title: 'Kort historik över socknen, byarna och stationssamhället',
+    desc: 'En överblick över Tjörnarps socken, byarna och stationssamhällets framväxt.',
+    url: 'https://tjornarpshistoria.se/Sockenhistorik.pdf',
+  },
+  {
+    title: 'Tjörnarps stationssamhälles historia',
+    desc: 'Hur samhället växte fram kring järnvägsstationen från 1875.',
+    url: 'https://www.tjornarpshistoria.se/Samhallets%20historia.pdf',
+  },
+  {
+    title: 'Tjörnarps kvarns historia',
+    desc: 'Kvarnens historia – en del av byns äldre näringsliv.',
+    url: 'https://tjornarpshistoria.se/tjkvarnhist.pdf',
+  },
+  {
+    title: 'Sockengillets historia',
+    desc: 'Tjörnarps Sockengilles historia, med bilder. Av Lena Frykman.',
+    url: 'https://www.tjornarpshistoria.se/Sockengillets%20historia%20m%20bilder%20maj12.pdf',
+  },
+  {
+    title: 'Den lilla byn i Gunnarp',
+    desc: 'Byn Gunnarps historia. Av Rune Andersson.',
+    url: 'https://tjornarpshistoria.se/DlbavNN18.pdf',
+  },
+  {
+    title: 'Karlarpsby hållplats 1943–1975',
+    desc: 'Om järnvägshållplatsen i Karlarpsby under åren 1943 till 1975.',
+    url: 'https://tjornarpshistoria.se/Karlarpsbyhallp.pdf',
+  },
+  {
+    title: 'Mordet på Nils Persson på Korsarödsgården 1858',
+    desc: 'En av bygdens mest omtalade historiska händelser.',
+    url: 'https://tjornarpshistoria.se/Nilsperssonmordet.pdf',
+  },
+  {
+    title: 'Domslut efter Nils Perssonmordet',
+    desc: 'Domstolens utslag i fallet med mordet 1858.',
+    url: 'https://www.tjornarpshistoria.se/NPmordetdomslut.pdf',
+  },
+  {
+    title: 'Vulkaner i Korsaröd m.m.',
+    desc: 'Geologisk studie om vulkanism i Korsaröd. Av Hans Tralau.',
+    url: 'https://tjornarpshistoria.se/tralauvulkanism.pdf',
+  },
+  {
+    title: 'Historiska blogginlägg',
+    desc: 'Samlade korta historiska notiser från Tjörnarpsbloggen.',
+    url: 'https://tjornarpshistoria.se/bloggtjhist2022.pdf',
+  },
+];
+---
+<Base
+  title="PDF-bibliotek"
+  description="Historiska texter och dokument om Tjörnarp – från tjornarpshistoria.se."
+>
+  <PageHeader
+    eyebrow="PDF-bibliotek"
+    title="Historiska dokument"
+    lead="Texter, berättelser och dokument om Tjörnarps historia. Samlade och utgivna av Tjörnarps Sockengille på tjornarpshistoria.se."
+  />
+
+  <section class="mx-auto max-w-4xl px-5 py-14">
+    <ul class="grid gap-4 sm:grid-cols-2">
+      {docs.map((doc) => (
+        <li>
+          <a href={doc.url} target="_blank" rel="noopener" class="group flex h-full gap-4 rounded-2xl border border-forest-700/10 bg-paper p-5 transition-all hover:border-forest-700/20 hover:shadow-lg hover:shadow-forest-800/8">
+            <span class="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-tegel-100 text-tegel-600">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-6 4h3M7 3h7l5 5v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M14 3v5h5"/></svg>
+            </span>
+            <span class="min-w-0">
+              <span class="block font-semibold text-forest-800 group-hover:text-forest-700">{doc.title}</span>
+              <span class="mt-1 block text-sm leading-relaxed text-ink-soft">{doc.desc}</span>
+              <span class="mt-2 inline-block text-xs font-semibold uppercase tracking-wide text-tegel-600">PDF ↗</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <p class="mt-10 rounded-2xl bg-cream-deep p-6 text-center text-ink-soft">
+      Hela samlingen, inklusive äldre kartor, finns på
+      <a class="font-semibold text-forest-700 underline" href="https://www.tjornarpshistoria.se/" target="_blank" rel="noopener">tjornarpshistoria.se</a>.
+    </p>
+  </section>
+</Base>

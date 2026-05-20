@@ -1,0 +1,120 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import HeroScene from '../components/HeroScene.astro';
+import SectionCard from '../components/SectionCard.astro';
+import { sections } from '../lib/site';
+
+const now = new Date();
+
+const news = (await getCollection('nyheter', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const events = (await getCollection('evenemang', ({ data }) => !data.draft))
+  .filter((e) => (e.data.end ?? e.data.start) >= now)
+  .sort((a, b) => a.data.start.getTime() - b.data.start.getTime())
+  .slice(0, 4);
+
+const dateFmt = new Intl.DateTimeFormat('sv-SE', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base>
+  <!-- Hero -->
+  <section class="relative isolate overflow-hidden">
+    <HeroScene class="absolute inset-0 -z-10 h-full w-full" />
+    <div class="mx-auto max-w-6xl px-5 pb-28 pt-20 sm:pb-36 sm:pt-28">
+      <div class="max-w-2xl">
+        <p class="mb-4 inline-flex items-center gap-2 rounded-full bg-paper/80 px-4 py-1.5 text-sm font-semibold text-forest-700 ring-1 ring-forest-700/10 backdrop-blur">
+          Höörs kommun · Skåne
+        </p>
+        <h1 class="text-5xl text-forest-800 sm:text-6xl">
+          Tjörnarp
+          <span class="block font-display text-2xl font-normal italic text-tegel-600 sm:text-3xl">byn vid sjön</span>
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink">
+          En liten by med lång historia, mellan Tjörnarpssjön och de skånska Göingekullarna.
+          Här hittar du nyheter, evenemang, föreningar, företag och bygdens historia.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/kalender" class="rounded-full bg-forest-700 px-6 py-3 text-sm font-semibold text-cream transition-colors hover:bg-forest-800">Vad händer i byn?</a>
+          <a href="/natur" class="rounded-full bg-paper px-6 py-3 text-sm font-semibold text-forest-800 ring-1 ring-forest-700/15 transition-colors hover:bg-forest-100">Natur & sjön</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- News + events -->
+  <section class="mx-auto max-w-6xl px-5 py-16">
+    <div class="grid gap-12 lg:grid-cols-[1.5fr_1fr]">
+      <!-- Latest news -->
+      <div>
+        <div class="mb-6 flex items-baseline justify-between">
+          <h2 class="text-3xl text-forest-800">Senaste nytt</h2>
+          <a href="/nyheter" class="text-sm font-semibold text-forest-700 hover:text-tegel-600">Alla nyheter →</a>
+        </div>
+        {news.length === 0 ? (
+          <p class="rounded-2xl border border-dashed border-forest-700/20 bg-paper p-6 text-ink-soft">
+            Inga nyheter publicerade ännu. Lägg till den första via <a class="font-semibold text-forest-700 underline" href="/admin/">redigeringsverktyget</a>.
+          </p>
+        ) : (
+          <ul class="space-y-5">
+            {news.map((post) => (
+              <li>
+                <a href={`/nyheter/${post.id}/`} class="group block rounded-2xl border border-forest-700/10 bg-paper p-5 transition-all hover:border-forest-700/20 hover:shadow-lg hover:shadow-forest-800/8">
+                  <time class="text-xs font-semibold uppercase tracking-wide text-tegel-600" datetime={post.data.date.toISOString()}>{dateFmt.format(post.data.date)}</time>
+                  <h3 class="mt-1 text-xl text-forest-800 group-hover:text-forest-700">{post.data.title}</h3>
+                  {post.data.summary && <p class="mt-1.5 text-[15px] leading-relaxed text-ink-soft">{post.data.summary}</p>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <!-- Upcoming events -->
+      <div>
+        <div class="mb-6 flex items-baseline justify-between">
+          <h2 class="text-3xl text-forest-800">På gång</h2>
+          <a href="/kalender" class="text-sm font-semibold text-forest-700 hover:text-tegel-600">Kalender →</a>
+        </div>
+        {events.length === 0 ? (
+          <p class="rounded-2xl border border-dashed border-forest-700/20 bg-paper p-6 text-ink-soft">
+            Inga kommande evenemang inlagda ännu.
+          </p>
+        ) : (
+          <ul class="space-y-3">
+            {events.map((ev) => (
+              <li class="flex gap-4 rounded-2xl border border-forest-700/10 bg-paper p-4">
+                <div class="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-xl bg-forest-100 text-forest-800">
+                  <span class="text-lg font-bold leading-none">{ev.data.start.getDate()}</span>
+                  <span class="text-[11px] uppercase">{new Intl.DateTimeFormat('sv-SE', { month: 'short' }).format(ev.data.start)}</span>
+                </div>
+                <div class="min-w-0">
+                  <h3 class="truncate text-base font-semibold text-forest-800">{ev.data.title}</h3>
+                  <p class="text-sm text-ink-soft">
+                    {ev.data.time && <span>{ev.data.time}</span>}
+                    {ev.data.time && ev.data.location && <span> · </span>}
+                    {ev.data.location && <span>{ev.data.location}</span>}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section grid -->
+  <section class="grain bg-cream-deep py-16">
+    <div class="mx-auto max-w-6xl px-5">
+      <h2 class="text-3xl text-forest-800">Utforska Tjörnarp</h2>
+      <p class="mt-2 max-w-2xl text-ink-soft">Allt om byn samlat på ett ställe.</p>
+      <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {sections.map((s) => (
+          <SectionCard href={s.href} title={s.title} blurb={s.blurb} accent={s.accent} />
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

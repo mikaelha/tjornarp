@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { site } from '../lib/site';
+---
+<Base
+  title="Tjörnarps Sockengille"
+  description="Tjörnarps Sockengille – den ideella förening som värnar bygden, vårdar dess historia och driver tjornarp.com."
+>
+  <PageHeader
+    eyebrow="Sockengillet"
+    title="Tjörnarps Sockengille"
+    lead="Den ideella förening som värnar bygdens intressen, vårdar dess historia och driver den här hemsidan."
+  />
+
+  <section class="mx-auto max-w-3xl px-5 py-14">
+    <div class="prose-tjornarp">
+      <p>
+        Tjörnarps Sockengille är en ideell förening (org.nr 842000-9782) som bildades
+        för att ta tillvara socknens olika intressen. Bakgrunden var
+        kommunsammanslagningarna under 1900-talet, då socknarna upphörde att vara
+        egna självstyrande enheter. När Tjörnarp 1952 blev en del av Sösdala kommun
+        växte behovet av att någon bevakade just Tjörnarpsbygdens frågor.
+      </p>
+
+      <h2>Vad gör gillet?</h2>
+      <ul>
+        <li>Bevakar bygdens intressen och finns representerat i Höörs kommuns <strong>byaråd</strong>.</li>
+        <li>Samlar och tillgängliggör Tjörnarps historia på <a href={site.social.historia} target="_blank" rel="noopener">tjornarpshistoria.se</a>.</li>
+        <li>Sköter flera av <a href="/natur/">vandringslederna</a> kring byn.</li>
+        <li>Har bland annat bidragit ekonomiskt till arbetet med vattenkvaliteten i Tjörnarpssjön.</li>
+        <li>Driver och äger den här hemsidan, <strong>tjornarp.com</strong>.</li>
+      </ul>
+
+      <h2>Historiebevarandet</h2>
+      <p>
+        En av gillets viktigaste insatser är att bevara och dela bygdens historia.
+        På historiesidan publiceras texter och material som inte ryms i de böcker
+        som getts ut – allt från sockenhistorik och bynotiser till äldre kartor.
+        Ett urval finns samlat i vårt <a href="/bibliotek/">PDF-bibliotek</a>.
+      </p>
+
+      <h2>Bli medlem och engagera dig</h2>
+      <p>
+        Gillet lever genom dem som engagerar sig. Vill du bli medlem, hjälpa till
+        eller bidra med material till historiesamlingen?
+        <a href="/kontakt/">Hör av dig</a> eller följ oss på
+        <a href={site.social.facebookSockengille} target="_blank" rel="noopener">Facebook</a>.
+      </p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,71 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+const now = new Date();
+now.setHours(0, 0, 0, 0);
+
+const events = (await getCollection('evenemang', ({ data }) => !data.draft))
+  .filter((e) => (e.data.end ?? e.data.start) >= now)
+  .sort((a, b) => a.data.start.getTime() - b.data.start.getTime());
+
+// Group by "month year"
+const monthFmt = new Intl.DateTimeFormat('sv-SE', { month: 'long', year: 'numeric' });
+const groups = new Map<string, typeof events>();
+for (const ev of events) {
+  const key = monthFmt.format(ev.data.start);
+  if (!groups.has(key)) groups.set(key, []);
+  groups.get(key)!.push(ev);
+}
+
+const dayFmt = new Intl.DateTimeFormat('sv-SE', { weekday: 'short', day: 'numeric' });
+const rangeFmt = new Intl.DateTimeFormat('sv-SE', { day: 'numeric', month: 'short' });
+---
+<Base title="Evenemangskalender" description="Kommande evenemang i Tjörnarp – marknader, träffar, loppisar och mer.">
+  <PageHeader
+    eyebrow="Kalender"
+    title="Evenemang i Tjörnarp"
+    lead="Marknader, träffar, loppisar och årets återkommande tilldragelser. Arrangerar du något? Tipsa oss så lägger vi upp det."
+  />
+
+  <section class="mx-auto max-w-3xl px-5 py-14">
+    {events.length === 0 ? (
+      <div class="rounded-2xl border border-dashed border-forest-700/20 bg-paper p-8 text-center">
+        <p class="text-lg text-forest-800">Inga kommande evenemang inlagda ännu.</p>
+        <p class="mt-2 text-ink-soft">Har du ett evenemang att tipsa om? <a class="font-semibold text-forest-700 underline" href="/kontakt/">Hör av dig</a>.</p>
+      </div>
+    ) : (
+      <div class="space-y-12">
+        {[...groups.entries()].map(([month, evs]) => (
+          <div>
+            <h2 class="mb-4 text-2xl capitalize text-forest-800">{month}</h2>
+            <ul class="space-y-4">
+              {evs.map((ev) => (
+                <li class="flex flex-col gap-4 rounded-2xl border border-forest-700/10 bg-paper p-5 sm:flex-row">
+                  <div class="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-xl bg-forest-700 text-cream">
+                    <span class="text-2xl font-bold leading-none">{ev.data.start.getDate()}</span>
+                    <span class="text-[11px] uppercase">{new Intl.DateTimeFormat('sv-SE', { month: 'short' }).format(ev.data.start)}</span>
+                  </div>
+                  <div class="min-w-0 flex-1">
+                    <h3 class="text-xl text-forest-800">{ev.data.title}</h3>
+                    <p class="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-sm text-ink-soft">
+                      <span class="capitalize">
+                        {dayFmt.format(ev.data.start)}
+                        {ev.data.end && ` – ${rangeFmt.format(ev.data.end)}`}
+                      </span>
+                      {ev.data.time && <span>· {ev.data.time}</span>}
+                      {ev.data.location && <span>· {ev.data.location}</span>}
+                    </p>
+                    {ev.data.summary && <p class="mt-2 leading-relaxed text-ink-soft">{ev.data.summary}</p>}
+                    {ev.data.organizer && <p class="mt-2 text-sm text-ink-soft/80">Arrangör: {ev.data.organizer}</p>}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    )}
+  </section>
+</Base>

@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+// A compact timeline grounded in documented history. Sources: Wikipedia
+// (Tjörnarp / Tjörnarps socken) and tjornarpshistoria.se.
+const timeline = [
+  { year: 'Stenåldern', text: 'Trakten har mycket gamla anor med belagd stenåldersbosättning och gravar från järnåldern.' },
+  { year: '1100-talet', text: 'En medeltida kyrka uppförs i Tjörnarp.' },
+  { year: '1858', text: 'Mordet på Nils Persson på Korsarödsgården – en av bygdens mest omtalade historiska händelser.' },
+  { year: '1864', text: 'Den medeltida kyrkan rivs och en ny kyrka byggs nordväst om samhället.' },
+  { year: '1875', text: 'Tjörnarps station anläggs vid Södra stambanan – förutsättningen för att samhället växer fram.' },
+  { year: '1898', text: 'Ett tegelbruk öppnar och tillverkar omkring 3 miljoner tegel om året. Ringugnen finns kvar än idag.' },
+  { year: '1950-talet', text: 'Småindustrin blomstrar: textilfabrik, stärkelsetillverkning, mejeri och kvarn.' },
+  { year: '1958', text: 'Tegelbruket brinner ner.' },
+  { year: '1971', text: 'Tjörnarp blir en del av Höörs kommun.' },
+  { year: '2014', text: 'Tågtrafiken återupptas i december – Pågatågen stannar åter i Tjörnarp.' },
+];
+---
+<Base title="Historia" description="Tjörnarps historia – från stenålder och medeltida kyrka till stambanan 1875 och tegelbruket.">
+  <PageHeader
+    eyebrow="Historia"
+    title="Byns långa historia"
+    lead="Från stenålder och medeltida kyrka till järnvägen som byggde samhället. Tjörnarp har en historia värd att berätta."
+  />
+
+  <section class="mx-auto max-w-3xl px-5 py-14">
+    <div class="prose-tjornarp">
+      <p>
+        Tjörnarp ligger mellan Tjörnarpssjön och riksväg 23 i Höörs kommun, i ett
+        böljande landskap av omväxlande betesmarker och åkrar. Bygden har gamla anor,
+        men det moderna samhället växte fram först när järnvägen kom på 1870-talet.
+        Idag bor omkring 875 personer i Tjörnarp.
+      </p>
+      <p>
+        Mycket av det som hänt finns dokumenterat och nedtecknat. Tjörnarps
+        Sockengille samlar texter, kartor och berättelser på
+        <a href="https://www.tjornarpshistoria.se/" target="_blank" rel="noopener">tjornarpshistoria.se</a>
+        – och ett urval dokument finns i vårt <a href="/bibliotek/">PDF-bibliotek</a>.
+      </p>
+    </div>
+
+    <h2 class="mt-12 mb-2 font-display text-2xl text-forest-800">Tidslinje</h2>
+    <ol class="relative mt-6 space-y-7 border-l-2 border-forest-300/50 pl-7">
+      {timeline.map((t) => (
+        <li class="relative">
+          <span class="absolute -left-[35px] top-1.5 h-3.5 w-3.5 rounded-full bg-tegel-500 ring-4 ring-cream"></span>
+          <p class="font-display text-lg font-semibold text-forest-800">{t.year}</p>
+          <p class="mt-0.5 leading-relaxed text-ink-soft">{t.text}</p>
+        </li>
+      ))}
+    </ol>
+
+    <div class="mt-12 rounded-2xl bg-cream-deep p-6">
+      <h2 class="font-display text-xl text-forest-800">Vill du läsa mer?</h2>
+      <p class="mt-2 text-ink-soft">
+        I PDF-biblioteket finns längre texter om bland annat stationssamhällets
+        framväxt, kvarnen, byn Gunnarp och mordet 1858.
+      </p>
+      <a href="/bibliotek/" class="mt-4 inline-block rounded-full bg-forest-700 px-5 py-2.5 text-sm font-semibold text-cream hover:bg-forest-800">Till PDF-biblioteket</a>
+    </div>
+  </section>
+</Base>

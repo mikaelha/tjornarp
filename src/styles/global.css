@@ -1,0 +1,137 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------ *
+ *  Tjörnarp.com – design system
+ *  Warm & characterful: rooted in the landscape around Tjörnarpssjön
+ *  – forest green, lake blue, terracotta tegel, wheat, warm cream.
+ * ------------------------------------------------------------------ */
+
+@theme {
+  /* Surfaces */
+  --color-cream: #f7f1e4;
+  --color-cream-deep: #efe6d3;
+  --color-paper: #fdfaf3;
+
+  /* Ink */
+  --color-ink: #2a2620;
+  --color-ink-soft: #4f483d;
+
+  /* Forest (primary) */
+  --color-forest-50: #eef3ef;
+  --color-forest-100: #d6e3d9;
+  --color-forest-300: #8fb09b;
+  --color-forest-500: #4a7a63;
+  --color-forest-600: #3a6450;
+  --color-forest-700: #2d4f40;
+  --color-forest-800: #233e32;
+
+  /* Lake (secondary) */
+  --color-lake-100: #d6e6ec;
+  --color-lake-400: #6aa0b3;
+  --color-lake-600: #3f7689;
+  --color-lake-700: #2f5d6e;
+
+  /* Tegel / terracotta (accent) */
+  --color-tegel-100: #f3dbcd;
+  --color-tegel-400: #d08a63;
+  --color-tegel-500: #c16e44;
+  --color-tegel-600: #a85733;
+
+  /* Wheat (highlight) */
+  --color-wheat-300: #e9c878;
+  --color-wheat-500: #d2a23f;
+
+  /* Type */
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --font-sans: 'Mulish', ui-sans-serif, system-ui, sans-serif;
+
+  /* Rhythm */
+  --radius-xl2: 1.5rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'liga' 1, 'calt' 1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 540;
+    letter-spacing: -0.01em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+
+  /* Optical display settings for Fraunces */
+  h1, h2 {
+    font-variation-settings: 'opsz' 110, 'SOFT' 30;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-wheat-300);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-forest-600);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  /* Reading width for long-form prose pages */
+  .prose-tjornarp {
+    max-width: 68ch;
+    line-height: 1.72;
+    color: var(--color-ink-soft);
+  }
+  .prose-tjornarp h2 {
+    color: var(--color-ink);
+    margin-top: 2.4em;
+    margin-bottom: 0.5em;
+    font-size: 1.65rem;
+  }
+  .prose-tjornarp h3 {
+    color: var(--color-ink);
+    margin-top: 1.8em;
+    margin-bottom: 0.4em;
+    font-size: 1.25rem;
+  }
+  .prose-tjornarp p { margin-bottom: 1.1em; }
+  .prose-tjornarp ul { margin: 1em 0; padding-left: 1.2em; list-style: disc; }
+  .prose-tjornarp li { margin-bottom: 0.4em; }
+  .prose-tjornarp a {
+    color: var(--color-forest-700);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+  }
+  .prose-tjornarp a:hover { color: var(--color-tegel-600); }
+
+  /* Subtle paper grain texture used on hero / section bands */
+  .grain {
+    position: relative;
+  }
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}

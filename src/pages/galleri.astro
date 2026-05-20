@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+// Drop real photos into /public/galleri/ and list them here (or wire the
+// "Galleri" collection in the CMS). Until then we show characterful
+// placeholder tiles so the layout is ready to go.
+const placeholders = [
+  { label: 'Tjörnarpssjön', from: '#7fb0c2', to: '#3f7689', tall: true },
+  { label: 'Kyrkan', from: '#e9c878', to: '#c16e44' },
+  { label: 'Stationen', from: '#8fb09b', to: '#3a6450' },
+  { label: 'Vandringslederna', from: '#4a7a63', to: '#233e32', tall: true },
+  { label: 'Höst vid sjön', from: '#d08a63', to: '#a85733' },
+  { label: 'Vinter i byn', from: '#d6e6ec', to: '#6aa0b3' },
+];
+---
+<Base title="Bildgalleri" description="Bilder från Tjörnarp – sjön, byn och årstiderna.">
+  <PageHeader
+    eyebrow="Bildgalleri"
+    title="Bilder från byn"
+    lead="Tjörnarp genom årstiderna. Har du fina bilder från byn att dela? Hör av dig så fyller vi på galleriet."
+  />
+
+  <section class="mx-auto max-w-5xl px-5 py-14">
+    <div class="columns-2 gap-4 sm:columns-3 [&>*]:mb-4">
+      {placeholders.map((p) => (
+        <figure
+          class="grain relative flex break-inside-avoid items-end overflow-hidden rounded-2xl p-4 text-cream"
+          style={`aspect-ratio:${p.tall ? '3/4' : '4/3'};background:linear-gradient(150deg, ${p.from}, ${p.to})`}
+        >
+          <figcaption class="relative font-display text-lg font-semibold drop-shadow-sm">{p.label}</figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <p class="mt-10 rounded-2xl border border-dashed border-forest-700/20 bg-paper p-6 text-center text-ink-soft">
+      Det här är platshållare. Riktiga foton läggs in i mappen
+      <code class="rounded bg-cream-deep px-1.5 py-0.5 text-sm">public/galleri/</code>
+      och listas på den här sidan. <a class="font-semibold text-forest-700 underline" href="/kontakt/">Bidra med bilder</a>.
+    </p>
+  </section>
+</Base>

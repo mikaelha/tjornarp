@@ -1,0 +1,28 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  blurb: string;
+  accent?: 'forest' | 'lake' | 'tegel' | 'wheat';
+}
+const { href, title, blurb, accent = 'forest' } = Astro.props;
+
+const bar: Record<string, string> = {
+  forest: 'bg-forest-500',
+  lake: 'bg-lake-400',
+  tegel: 'bg-tegel-500',
+  wheat: 'bg-wheat-500',
+};
+---
+<a
+  href={href}
+  class="group relative flex flex-col overflow-hidden rounded-2xl border border-forest-700/10 bg-paper p-6 transition-all hover:-translate-y-0.5 hover:border-forest-700/20 hover:shadow-xl hover:shadow-forest-800/8"
+>
+  <span class:list={['absolute inset-x-0 top-0 h-1', bar[accent]]}></span>
+  <h3 class="text-xl text-forest-800">{title}</h3>
+  <p class="mt-2 flex-1 text-[15px] leading-relaxed text-ink-soft">{blurb}</p>
+  <span class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-forest-700 transition-colors group-hover:text-tegel-600">
+    Läs mer
+    <svg class="h-4 w-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6"/></svg>
+  </span>
+</a>

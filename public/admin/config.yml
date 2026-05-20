@@ -1,0 +1,108 @@
+# Sveltia CMS configuration (Decap/Netlify CMS compatible).
+# Editors log in with GitHub via Netlify's OAuth and edit the markdown
+# files in src/content/. Changes are committed to the repo and the site
+# rebuilds automatically.
+
+backend:
+  name: github
+  repo: mikaelha/tjornarp   # <-- flytta gärna till org tjornarps-sockengille senare
+  branch: main
+
+# Spara mediafiler (bilder) i public/uploads och länka från /uploads.
+media_folder: public/uploads
+public_folder: /uploads
+
+locale: sv
+
+# Visa redigeringsverktyget på svenska där det går.
+publish_mode: simple
+
+collections:
+  - name: nyheter
+    label: Nyheter
+    label_singular: Nyhet
+    folder: src/content/nyheter
+    create: true
+    slug: '{{slug}}'
+    extension: md
+    format: frontmatter
+    summary: '{{title}} ({{date}})'
+    sortable_fields: [date, title]
+    fields:
+      - { name: title, label: Rubrik, widget: string }
+      - { name: date, label: Datum, widget: datetime, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false, picker_utc: true }
+      - { name: summary, label: Ingress, widget: text, required: false }
+      - { name: author, label: Författare, widget: string, required: false, default: 'Tjörnarps Sockengille' }
+      - { name: draft, label: Utkast (visas ej publikt), widget: boolean, default: false }
+      - { name: body, label: Innehåll, widget: markdown }
+
+  - name: evenemang
+    label: Evenemang
+    label_singular: Evenemang
+    folder: src/content/evenemang
+    create: true
+    slug: '{{slug}}'
+    extension: md
+    format: frontmatter
+    summary: '{{title}} ({{start}})'
+    sortable_fields: [start, title]
+    fields:
+      - { name: title, label: Rubrik, widget: string }
+      - { name: start, label: Startdatum, widget: datetime, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false, picker_utc: true }
+      - { name: end, label: Slutdatum (om flera dagar), widget: datetime, required: false, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false, picker_utc: true }
+      - { name: time, label: 'Tid (fritext, t.ex. "kl 10–14")', widget: string, required: false }
+      - { name: location, label: Plats, widget: string, required: false }
+      - { name: organizer, label: Arrangör, widget: string, required: false }
+      - { name: summary, label: Kort beskrivning, widget: text, required: false }
+      - { name: draft, label: Utkast (visas ej publikt), widget: boolean, default: false }
+      - { name: body, label: Mer info, widget: markdown, required: false }
+
+  - name: foreningar
+    label: Föreningar
+    label_singular: Förening
+    folder: src/content/foreningar
+    create: true
+    slug: '{{slug}}'
+    extension: md
+    format: frontmatter
+    sortable_fields: [order, name]
+    fields:
+      - { name: name, label: Namn, widget: string }
+      - name: category
+        label: Kategori
+        widget: select
+        options: ['Idrott', 'Kultur & hembygd', 'Natur & friluft', 'Barn & ungdom', 'Övrigt']
+        default: 'Övrigt'
+      - { name: summary, label: Beskrivning, widget: text, required: false }
+      - { name: website, label: Webbplats (https://...), widget: string, required: false }
+      - { name: facebook, label: Facebook (https://...), widget: string, required: false }
+      - { name: email, label: E-post, widget: string, required: false }
+      - { name: phone, label: Telefon, widget: string, required: false }
+      - { name: contactPerson, label: Kontaktperson, widget: string, required: false }
+      - { name: order, label: Sorteringsordning (lägre = högre upp), widget: number, default: 100, value_type: int }
+      - { name: body, label: Mer text (valfritt), widget: markdown, required: false }
+
+  - name: foretag
+    label: Företag
+    label_singular: Företag
+    folder: src/content/foretag
+    create: true
+    slug: '{{slug}}'
+    extension: md
+    format: frontmatter
+    sortable_fields: [order, name]
+    fields:
+      - { name: name, label: Namn, widget: string }
+      - name: category
+        label: Kategori
+        widget: select
+        options: ['Mat & dryck', 'Hantverk & bygg', 'Handel & service', 'Industri & tillverkning', 'Besök & boende', 'Övrigt']
+        default: 'Övrigt'
+      - { name: summary, label: Beskrivning, widget: text, required: false }
+      - { name: website, label: Webbplats (https://...), widget: string, required: false }
+      - { name: facebook, label: Facebook (https://...), widget: string, required: false }
+      - { name: email, label: E-post, widget: string, required: false }
+      - { name: phone, label: Telefon, widget: string, required: false }
+      - { name: address, label: Adress, widget: string, required: false }
+      - { name: order, label: Sorteringsordning (lägre = högre upp), widget: number, default: 100, value_type: int }
+      - { name: body, label: Mer text (valfritt), widget: markdown, required: false }

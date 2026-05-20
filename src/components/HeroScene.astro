@@ -1,0 +1,77 @@
+---
+// Layered illustration of Tjörnarp's setting: rolling Göinge fields,
+// Tjörnarpssjön, the church on the rise, and the railway that made the
+// village grow from 1875. Replace with a photo later by swapping the
+// markup in index.astro – this is a graceful, lightweight default.
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+---
+<svg
+  class={className}
+  viewBox="0 0 1200 600"
+  preserveAspectRatio="xMidYMid slice"
+  xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  aria-label="Illustration över Tjörnarp med sjön, kullarna och kyrkan"
+>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4ead2" />
+      <stop offset="0.55" stop-color="#f7f1e4" />
+    </linearGradient>
+    <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7fb0c2" />
+      <stop offset="1" stop-color="#3f7689" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="600" fill="url(#sky)" />
+
+  <!-- sun -->
+  <circle cx="980" cy="140" r="54" fill="#e9c878" opacity="0.85" />
+
+  <!-- far hills -->
+  <path d="M0 300 C 200 250 380 270 560 250 C 760 228 980 268 1200 240 L1200 600 L0 600Z" fill="#8fb09b" opacity="0.55" />
+
+  <!-- mid hills -->
+  <path d="M0 360 C 220 320 420 350 640 330 C 860 312 1040 350 1200 330 L1200 600 L0 600Z" fill="#4a7a63" />
+
+  <!-- church on the rise -->
+  <g transform="translate(250 268)">
+    <rect x="-6" y="-2" width="34" height="40" fill="#efe6d3" />
+    <rect x="2" y="-22" width="14" height="22" fill="#efe6d3" />
+    <path d="M2 -22 L9 -40 L16 -22 Z" fill="#c16e44" />
+    <rect x="6.5" y="-15" width="3" height="3" fill="#3f7689" />
+  </g>
+
+  <!-- lake -->
+  <path d="M0 430 C 260 408 520 412 720 432 C 900 450 1060 446 1200 430 L1200 520 C 1040 536 860 540 660 528 C 460 516 220 520 0 502 Z" fill="url(#lake)" />
+  <!-- lake shimmer -->
+  <path d="M120 470 q 60 -10 120 0" stroke="#d6e6ec" stroke-width="3" fill="none" opacity="0.6" stroke-linecap="round" />
+  <path d="M820 462 q 70 -10 140 0" stroke="#d6e6ec" stroke-width="3" fill="none" opacity="0.55" stroke-linecap="round" />
+
+  <!-- foreground field -->
+  <path d="M0 500 C 240 520 520 520 760 506 C 960 494 1080 506 1200 498 L1200 600 L0 600Z" fill="#3a6450" />
+
+  <!-- railway embankment + track (the 1875 stambana) -->
+  <path d="M0 556 L1200 528" stroke="#233e32" stroke-width="10" opacity="0.5" />
+  <g stroke="#2a2620" stroke-width="2.5" opacity="0.45">
+    <line x1="40" y1="556" x2="44" y2="546" />
+    <line x1="160" y1="553" x2="164" y2="543" />
+    <line x1="280" y1="550" x2="284" y2="540" />
+    <line x1="400" y1="547" x2="404" y2="537" />
+    <line x1="520" y1="545" x2="524" y2="535" />
+    <line x1="640" y1="542" x2="644" y2="532" />
+    <line x1="760" y1="540" x2="764" y2="530" />
+    <line x1="880" y1="537" x2="884" y2="527" />
+    <line x1="1000" y1="534" x2="1004" y2="524" />
+    <line x1="1120" y1="531" x2="1124" y2="521" />
+  </g>
+
+  <!-- trees -->
+  <g fill="#233e32">
+    <path d="M980 470 l16 -46 16 46 z" />
+    <path d="M1010 478 l14 -40 14 40 z" />
+    <path d="M70 486 l18 -50 18 50 z" />
+  </g>
+</svg>

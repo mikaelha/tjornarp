@@ -1,0 +1,18 @@
+---
+// A small emblem: a stylised lake + hill + church spire, echoing Tjörnarp's
+// setting between Tjörnarpssjön and the rolling Göinge landscape.
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+---
+<svg class={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <circle cx="24" cy="24" r="23" fill="var(--color-forest-700)" />
+  <!-- hills -->
+  <path d="M2 30c6-7 11-7 16-2 4 4 8 4 12-1 4-4 8-4 16 1v15H2V30Z" fill="var(--color-forest-500)" />
+  <!-- lake -->
+  <path d="M5 36c8 4 30 4 38 0v8c-8 3-30 3-38 0v-8Z" fill="var(--color-lake-400)" />
+  <!-- church spire -->
+  <path d="M24 7l3 6h-6l3-6Z" fill="var(--color-wheat-300)" />
+  <rect x="22" y="13" width="4" height="9" fill="var(--color-wheat-300)" />
+  <!-- sun -->
+  <circle cx="35" cy="16" r="3.5" fill="var(--color-wheat-300)" />
+</svg>

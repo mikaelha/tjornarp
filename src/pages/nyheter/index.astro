@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+
+const posts = (await getCollection('nyheter', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const dateFmt = new Intl.DateTimeFormat('sv-SE', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base title="Nyheter" description="Nyheter och notiser från Tjörnarp.">
+  <PageHeader
+    eyebrow="Nyheter"
+    title="Vad händer i byn"
+    lead="Information, beslut och notiser från Tjörnarp och Sockengillet."
+  />
+
+  <section class="mx-auto max-w-3xl px-5 py-14">
+    {posts.length === 0 ? (
+      <p class="rounded-2xl border border-dashed border-forest-700/20 bg-paper p-6 text-ink-soft">
+        Inga nyheter publicerade ännu.
+      </p>
+    ) : (
+      <ul class="space-y-6">
+        {posts.map((post) => (
+          <li>
+            <article class="rounded-2xl border border-forest-700/10 bg-paper p-6 transition-all hover:border-forest-700/20 hover:shadow-lg hover:shadow-forest-800/8">
+              <time class="text-xs font-semibold uppercase tracking-wide text-tegel-600" datetime={post.data.date.toISOString()}>{dateFmt.format(post.data.date)}</time>
+              <h2 class="mt-1 text-2xl text-forest-800">
+                <a href={`/nyheter/${post.id}/`} class="hover:text-forest-700">{post.data.title}</a>
+              </h2>
+              {post.data.summary && <p class="mt-2 leading-relaxed text-ink-soft">{post.data.summary}</p>}
+              <a href={`/nyheter/${post.id}/`} class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-forest-700 hover:text-tegel-600">
+                Läs hela →
+              </a>
+            </article>
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
+</Base>
