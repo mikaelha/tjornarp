@@ -154,22 +154,24 @@ själv.
 
 ### Engångsinställning
 
-1. **Ändra repo-namnet i `public/admin/config.yml`:**
-   ```yaml
-   backend:
-     name: github
-     repo: OWNER/REPO      # t.ex. tjornarps-sockengille/tjornarp
-     branch: main
-   ```
+Repot är redan inställt i `public/admin/config.yml` (`repo: mikaelha/tjornarp`,
+branch `main`). Kvar att göra:
+
+1. **Koppla repot för automatisk publicering (continuous deployment).** I Netlify:
+   projektet *tjornarp* → *Project configuration → Build & deploy → Continuous
+   deployment → Link repository* → GitHub → välj `mikaelha/tjornarp`. Då byggs
+   sajten om automatiskt vid varje ändring (inkl. CMS-sparningar).
 2. **Aktivera inloggning via Netlify (GitHub OAuth):**
-   - Skapa en GitHub OAuth-app enligt
-     [Netlifys guide](https://docs.netlify.com/visitor-access/oauth-provider-tokens/)
-     (*Settings → Developer settings → OAuth Apps* på GitHub).
+   - Skapa en GitHub OAuth-app: *Settings → Developer settings → OAuth Apps →
+     Register a new application*.
+     - **Homepage URL:** `https://tjornarp.netlify.app`
      - **Authorization callback URL:** `https://api.netlify.com/auth/done`
-   - Klistra in *Client ID* och *Client Secret* i Netlify under
-     *Site configuration → Access & security → OAuth → Install provider → GitHub*.
-3. **Bjud in redaktörer** som "collaborators" på GitHub-repot. De loggar sedan
-   in på `/admin/` med sina GitHub-konton.
+   - Kopiera *Client ID*, generera en *Client Secret*.
+   - Klistra in båda i Netlify under *Project configuration → Access & security
+     → OAuth → Authentication providers → Install provider → GitHub*.
+3. **Bjud in redaktörer** som collaborators på GitHub-repot
+   (*Settings → Collaborators*). De loggar sedan in på `/admin/` med sina
+   GitHub-konton.
 
 > Vill du som teknisk redaktör redigera lokalt utan inloggning? Sveltia stödjer
 > en "local backend" – se Sveltias dokumentation.
