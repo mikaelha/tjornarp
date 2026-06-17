@@ -182,10 +182,18 @@ branch `main`). Kvar att göra:
 
 Formuläret på `/kontakt` använder **Netlify Forms** – det fungerar automatiskt
 när sajten ligger på Netlify, helt utan server. Inskickade meddelanden dyker
-upp under *Forms* i Netlify-panelen (och kan vidarebefordras till e-post via en
-notifiering i Netlify). Inget login krävs för den som skickar.
+upp under *Forms* i Netlify-panelen. Inget login krävs för den som skickar.
 
 Gratisnivån täcker 100 inskick/månad.
+
+### Mejlnotifiering till sockengillet@gmail.com
+
+Sajtens kontaktadress är **`sockengillet@gmail.com`** (visas på `/kontakt` och
+styrs centralt i [`src/lib/site.ts`](src/lib/site.ts)). För att inskick från
+formuläret ska mejlas dit: Netlify → *Forms* → välj formuläret `kontakt` →
+*Settings & usage* → *Form notifications* → *Add notification* → *Email
+notification*, och ange `sockengillet@gmail.com`. Detta är en
+Netlify-inställning – ingen kodändring behövs.
 
 ---
 

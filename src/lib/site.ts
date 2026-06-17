@@ -8,6 +8,8 @@ export const site = {
     'natur kring Tjörnarpssjön och byns historia. En sida av och för bygden.',
   url: 'https://tjornarp.com',
   locale: 'sv_SE',
+  // Sockengillet's contact address – used for the contact page and notifications.
+  email: 'sockengillet@gmail.com',
   // Update these when the village's official channels change.
   social: {
     facebook: 'https://www.facebook.com/groups/1630832733894609/',
