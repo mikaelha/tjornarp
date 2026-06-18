@@ -2,7 +2,7 @@
 
 export const site = {
   name: 'Tjörnarp',
-  title: 'Tjörnarp – byn vid sjön',
+  title: 'Tjörnarp – byn vid sjön i Höörs kommun',
   description:
     'Allt om Tjörnarp i Höörs kommun – nyheter, evenemang, föreningar, företag, ' +
     'natur kring Tjörnarpssjön och byns historia. En sida av och för bygden.',

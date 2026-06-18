@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import { site } from '../../lib/site';
 
 export async function getStaticPaths() {
   const posts = await getCollection('nyheter', ({ data }) => !data.draft);
@@ -10,8 +11,37 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 const dateFmt = new Intl.DateTimeFormat('sv-SE', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const articleUrl = new URL(`/nyheter/${post.id}/`, site.url).href;
+const articleImage = new URL(post.data.cover?.src ?? '/og-default.png', site.url).href;
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  headline: post.data.title,
+  description: post.data.summary,
+  datePublished: post.data.date.toISOString(),
+  dateModified: post.data.date.toISOString(),
+  image: articleImage,
+  mainEntityOfPage: articleUrl,
+  author: {
+    '@type': post.data.author ? 'Person' : 'Organization',
+    name: post.data.author ?? 'Tjörnarps Sockengille',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Tjörnarps Sockengille',
+    logo: { '@type': 'ImageObject', url: new URL('/favicon-192.png', site.url).href },
+  },
+};
 ---
-<Base title={post.data.title} description={post.data.summary}>
+<Base
+  title={post.data.title}
+  description={post.data.summary}
+  image={post.data.cover?.src}
+  type="article"
+  publishedTime={post.data.date}
+  schema={articleSchema}
+>
   <article class="mx-auto max-w-3xl px-5 py-14">
     <a href="/nyheter/" class="text-sm font-semibold text-forest-700 hover:text-tegel-600">← Alla nyheter</a>
     <header class="mt-5 border-b border-forest-700/10 pb-6">

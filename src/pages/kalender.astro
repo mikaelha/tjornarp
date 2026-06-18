@@ -21,8 +21,28 @@ for (const ev of events) {
 
 const dayFmt = new Intl.DateTimeFormat('sv-SE', { weekday: 'short', day: 'numeric' });
 const rangeFmt = new Intl.DateTimeFormat('sv-SE', { day: 'numeric', month: 'short' });
+
+// Event structured data for upcoming events (helps Google's event rich results).
+const eventSchema = events.map((ev) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: ev.data.title,
+  startDate: ev.data.start.toISOString().slice(0, 10),
+  ...(ev.data.end && { endDate: ev.data.end.toISOString().slice(0, 10) }),
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  ...(ev.data.location && { location: { '@type': 'Place', name: ev.data.location } }),
+  ...(ev.data.summary && { description: ev.data.summary }),
+  ...(ev.data.organizer && {
+    organizer: { '@type': 'Organization', name: ev.data.organizer },
+  }),
+}));
 ---
-<Base title="Evenemangskalender" description="Kommande evenemang i Tjörnarp – marknader, träffar, loppisar och mer.">
+<Base
+  title="Evenemangskalender"
+  description="Kommande evenemang i Tjörnarp – marknader, träffar, loppisar och mer."
+  schema={eventSchema}
+>
   <PageHeader
     eyebrow="Kalender"
     title="Evenemang i Tjörnarp"
