@@ -44,6 +44,11 @@ const orgSchema = {
   sameAs: [site.social.facebookSockengille, site.social.historia],
 };
 const jsonLd = [orgSchema, ...(schema ? (Array.isArray(schema) ? schema : [schema]) : [])];
+
+// Umami analytics (privacy-friendly, cookieless). The website ID is public, but we
+// read it from an env var so the script only loads once configured. Set
+// PUBLIC_UMAMI_WEBSITE_ID in Netlify (and .env locally) to enable.
+const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
 ---
 <!doctype html>
 <html lang="sv">
@@ -78,6 +83,16 @@ const jsonLd = [orgSchema, ...(schema ? (Array.isArray(schema) ? schema : [schem
     {jsonLd.map((s) => (
       <script type="application/ld+json" is:inline set:html={JSON.stringify(s)} />
     ))}
+
+    <!-- Analytics -->
+    {umamiWebsiteId && (
+      <script
+        is:inline
+        defer
+        src="https://cloud.umami.is/script.js"
+        data-website-id={umamiWebsiteId}
+      />
+    )}
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

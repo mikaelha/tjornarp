@@ -17,6 +17,7 @@ verktyg (Sveltia CMS) och hostad gratis på Netlify.
 - [Koppla domänen tjornarp.com (Loopia)](#koppla-domänen-tjornarpcom-loopia)
 - [Webbverktyget för icke-tekniska (Sveltia CMS)](#webbverktyget-för-icke-tekniska-sveltia-cms)
 - [Kontaktformuläret](#kontaktformuläret)
+- [Webbanalys (Umami)](#webbanalys-umami)
 - [Vad kostar det?](#vad-kostar-det)
 
 ---
@@ -194,6 +195,31 @@ formuläret ska mejlas dit: Netlify → *Forms* → välj formuläret `kontakt` 
 *Settings & usage* → *Form notifications* → *Add notification* → *Email
 notification*, och ange `sockengillet@gmail.com`. Detta är en
 Netlify-inställning – ingen kodändring behövs.
+
+---
+
+## Webbanalys (Umami)
+
+Sajten stödjer cookielös, GDPR-vänlig besöksstatistik via
+[Umami](https://umami.is). Ingen cookie-banner behövs. Analysen är **avstängd**
+tills ett website-ID anges – då laddas inget skript alls.
+
+Sätt upp ett **eget konto** (Sockengillets, inte en privatpersons) så att
+statistiken ägs av föreningen:
+
+1. Skapa ett konto på [cloud.umami.is](https://cloud.umami.is).
+2. *Settings → Websites → Add website*, domän `tjornarp.com`. Kopiera
+   website-ID:t (en UUID).
+3. Lägg in det i Netlify under *Site configuration → Environment variables*:
+   `PUBLIC_UMAMI_WEBSITE_ID = <uuid>`
+4. Trigga en ny deploy. Skriptet laddas då på alla sidor och statistiken syns i
+   Umami-panelen.
+
+> Lokalt: lägg samma rad i en `.env`-fil (se [`.env.example`](.env.example)).
+> Variabeln styrs centralt i [`src/layouts/Base.astro`](src/layouts/Base.astro).
+
+Umami Cloud har en gratisnivå (upp till 100 000 händelser/månad) som räcker gott
+för en bysajt.
 
 ---
 
